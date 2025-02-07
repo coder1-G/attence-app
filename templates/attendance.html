@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Records</title>
+    <style> body { background: black; color: lime; text-align: center; } </style>
+</head>
+<body>
+    <h1>Attendance Records</h1>
+    <table border="1" style="margin: auto; color: white;">
+        <tr><th>Name</th><th>Date</th><th>Time</th></tr>
+        {% for record in records %}
+            <tr><td>{{ record["Name"] }}</td><td>{{ record["Date"] }}</td><td>{{ record["Time"] }}</td></tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/logout">Logout</a>
+</body>
+</html>

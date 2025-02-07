@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Attendance</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #reader {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+        button {
+            padding: 10px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📷 Scan Your QR Code</h1>
+    <div id="reader"></div>
+    <script>
+        function startScanner() {
+            let scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+            scanner.render(result => {
+                alert("✅ Scanned: " + result);
+                fetch("/scan", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: result.trim() })
+                }).then(response => response.json())
+                  .then(data => alert(data.message));
+            });
+        }
+        startScanner();
+    </script>
+    <a href="/admin"><button>🔐 Admin Panel</button></a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body {
+    background-color: black;
+    color: neon-green;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: red;
+}
+
+button {
+    background: darkred;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}

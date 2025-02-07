@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 Admin Panel</h1>
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="checkPassword()">Login</button>
+    <div id="attendance-data"></div>
+
+    <script>
+        function checkPassword() {
+            let password = document.getElementById("password").value;
+            fetch("/check_password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: password })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      let table = "<table><tr><th>Name</th><th>Date</th><th>Time</th></tr>";
+                      data.records.forEach(record => {
+                          table += `<tr><td>${record.name}</td><td>${record.date}</td><td>${record.time}</td></tr>`;
+                      });
+                      table += "</table>";
+                      document.getElementById("attendance-data").innerHTML = table;
+                  } else {
+                      alert(data.message);
+                  }
+              });
+        }
+    </script>
+</body>
+</html>
